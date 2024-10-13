@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: src_customers
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+
+  - name: src_orders
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+
+      - name: user_id
+        tests:
+          - relationships:
+              to: ref('src_customers')
+              field: id
+
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['returned','completed','return_pending','shipped']
+
+
+
