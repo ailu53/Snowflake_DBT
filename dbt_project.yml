@@ -31,5 +31,22 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   snowflake_dbt:
+    +schema: "abc"
+    +tags: "all"
+    
+    Source:
+      +schema: "db_schema"
+      +tags:
+        - "src"
+        - "cust"
+        - "daily"
+
+    payments:
+
+      +tags: 
+        - "payments"
+        - "hourly"
+
+      +schema: "xyz"
     # Config indicated by + and applies to all files under models/example/
 

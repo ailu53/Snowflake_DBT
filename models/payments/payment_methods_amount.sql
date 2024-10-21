@@ -1,13 +1,10 @@
 
-{% set payment_methods = [ 'credit_card','coupon','bank_transfer','gift_card'] %}
+select orderid,
 
-select  orderid ,
-
-
-{% for method in payment_methods %}
-sum(case when paymentmethod = '{{method}}' then amount_dollar end) as {{method}}_ammount,
+{% for method in dbt_utils.get_column_values(table=ref('src_payments'), column='paymentmethod') %}
+sum(case when paymentmethod = '{{method}}' then amount_dollar end) as {{method}}_amount,
 
 {% endfor %}
 
-from {{ ref('src_payments')}}
+from {{ ref('src_payments') }}
 group by orderid
